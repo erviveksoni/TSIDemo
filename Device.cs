@@ -42,18 +42,18 @@ namespace Simulator
                 this.vibrationGenerator = new SampleDataGenerator(1, 10);
                 this.loadGenerator = new SampleDataGenerator(300, 1200);
             }
-
-            this.currentFloor = 0;
         }
 
         public async Task SendTelemetryAsync(int durationInMinutes, CancellationToken token)
         {
             var monitorData = new Telemetry();
+            this.currentFloor = 0;
             monitorData.Temperature = this.temperatureGenerator.GetNextValue();
             monitorData.Humidity = this.humidityGenerator.GetNextValue();
 
             var totalMessages = durationInMinutes * 60; // assuming a rate of 1 message per second
             int totalMessagesSent = 0;
+            Random floorRandom = new Random();
 
             while (!token.IsCancellationRequested &&
                    totalMessagesSent <= totalMessages)
@@ -77,9 +77,10 @@ namespace Simulator
 
                     if (this.deviceBehaviour.IsBlocked)
                     {
+                        // Assign only once
                         if (this.currentFloor < 1)
                         {
-                            this.currentFloor = Utility.GetFloor(previousFloor, 1, 20);
+                            this.currentFloor = Utility.GetFloorRandom(1, 15);
                         }
 
                         monitorData.Vibration = 0;
@@ -88,7 +89,7 @@ namespace Simulator
                     }
                     else
                     {
-                        this.currentFloor = Utility.GetFloor(previousFloor, 1, 20);
+                        this.currentFloor = Utility.GetFloorIncremental(previousFloor, 1, 20);
                         monitorData.Vibration = this.vibrationGenerator.GetNextValue();
                         monitorData.Load = this.loadGenerator.GetNextValue();
                         var floorDiff = this.currentFloor - previousFloor;
@@ -98,7 +99,7 @@ namespace Simulator
 
                     monitorData.Floor = this.currentFloor;
 
-                   await this.transport.SendEventAsync(monitorData.ToString());
+                //   await this.transport.SendEventAsync(monitorData.ToString());
                 }
                 finally
                 {

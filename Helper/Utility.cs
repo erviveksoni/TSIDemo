@@ -6,7 +6,7 @@ namespace Simulator
     {
         static Random rand = new Random();
 
-        public static int GetFloor(int current, int minFloor, int maxFloor)
+        public static int GetFloorIncremental(int current, int minFloor, int maxFloor)
         {
             if (current == minFloor)
             {
@@ -23,6 +23,11 @@ namespace Simulator
             }
 
             return current + 1;
+        }
+
+        public static int GetFloorRandom(int minFloor, int maxFloor)
+        {
+            return rand.Next(minFloor, maxFloor);
         }
 
         public static double IncrementValue(double current, double max)
