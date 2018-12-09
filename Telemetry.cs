@@ -29,6 +29,9 @@ namespace Simulator
         [JsonProperty("floor")]
         public int Floor { get; set; }
 
+        [JsonProperty("doorcycles")]
+        public int NumberOfDoorCycles { get; set; }
+
         public override string ToString()
         {
             JsonSerializerSettings dateFormatSettings =

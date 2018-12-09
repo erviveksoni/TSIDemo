@@ -51,9 +51,13 @@ namespace Simulator
             monitorData.Temperature = this.temperatureGenerator.GetNextValue();
             monitorData.Humidity = this.humidityGenerator.GetNextValue();
 
-            var totalMessages = durationInMinutes * 60; // assuming a rate of 1 message per second
+            // if elevator is busy then send 2 messages per second else 1 message
+            var totalMessages = durationInMinutes * (this.deviceBehaviour.IsBusy ? 2 : 1) * 60;
+
+            // if elevator is busy then frequence is 500ms else 1s
+            int frequency = this.deviceBehaviour.IsBusy ? 1 : 2 * (REPORT_FREQUENCY_IN_SECONDS * 500);
+
             int totalMessagesSent = 0;
-            Random floorRandom = new Random();
 
             while (!token.IsCancellationRequested &&
                    totalMessagesSent <= totalMessages)
@@ -86,6 +90,7 @@ namespace Simulator
                         monitorData.Vibration = 0;
                         monitorData.Load = 0;
                         monitorData.Distance = 0;
+                        monitorData.NumberOfDoorCycles = Utility.GetFloorRandom(0, 1);
                     }
                     else
                     {
@@ -95,6 +100,7 @@ namespace Simulator
                         var floorDiff = this.currentFloor - previousFloor;
                         var distance = floorDiff * 10;
                         monitorData.Distance = distance < 0 ? distance * -1 : distance;
+                        monitorData.NumberOfDoorCycles = Utility.GetFloorRandom(1, 4);
                     }
 
                     monitorData.Floor = this.currentFloor;
@@ -104,7 +110,7 @@ namespace Simulator
                 finally
                 {
                     totalMessagesSent++;
-                    await Task.Delay(TimeSpan.FromSeconds(REPORT_FREQUENCY_IN_SECONDS), token);
+                    await Task.Delay(TimeSpan.FromMilliseconds(frequency), token);
                 }
             }
 

@@ -3,7 +3,7 @@ device1,Building 1,Passenger,Contoso,600,ft,kg,C,RH,mm
 device2,Building 2,Passenger,Contoso,600,ft,kg,C,RH,mm
 device3,Building 3,Passenger,Contoso,600,ft,kg,C,RH,mm
 device4,Building 4,Passenger,Skyline,600,ft,kg,C,RH,mm
-device5,Building 5,Service,Skyline,1000,ft,kg,C,RH,mm
+device5,Building 5,Service,Contoso,1000,ft,kg,C,RH,mm
 device6,Building 1,Passenger,Contoso,600,ft,kg,C,RH,mm
 device7,Building 2,Passenger,Contoso,600,ft,kg,C,RH,mm
 device8,Building 3,Service,Skyline,1000,ft,kg,C,RH,mm

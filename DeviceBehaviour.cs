@@ -10,5 +10,8 @@
 
         // has elevator a faulty AC unit
         public bool HasFaultyACUnit { get; set; }
+
+        // Elevator is very frequently used highlighting number of trips 
+        public bool IsBusy { get; set; }
     }
 }

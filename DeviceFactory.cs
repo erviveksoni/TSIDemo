@@ -19,12 +19,14 @@ namespace Simulator
                 var isServiceElevator = bool.Parse(deviceToken[1]);
                 var isBlocked = bool.Parse(deviceToken[2]);
                 var hasFaultyAC = bool.Parse(deviceToken[3]);
+                var isBusy = bool.Parse(deviceToken[4]);
 
                 var behaviour = new DeviceBehaviour()
                 {
                     IsBlocked = isBlocked,
                     IsService = isServiceElevator,
-                    HasFaultyACUnit = hasFaultyAC
+                    HasFaultyACUnit = hasFaultyAC,
+                    IsBusy = isBusy
                 };
 
                 var device = new Device(name, behaviour, this.transport);
