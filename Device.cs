@@ -105,7 +105,7 @@ namespace Simulator
 
                     monitorData.Floor = this.currentFloor;
 
-                    // await this.transport.SendEventAsync(monitorData.ToString());
+                    await this.transport.SendEventAsync(monitorData.ToString());
                 }
                 finally
                 {

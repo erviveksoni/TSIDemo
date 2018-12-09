@@ -12,7 +12,7 @@ namespace Simulator
     class Program
     {
         private static CancellationTokenSource ctsSource;
-        private static int durationMinutes = 1;
+        private static int durationMinutes = 5;
 
         static void Main(string[] args)
         {
