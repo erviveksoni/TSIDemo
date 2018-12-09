@@ -52,10 +52,10 @@ namespace Simulator
             monitorData.Humidity = this.humidityGenerator.GetNextValue();
 
             // if elevator is busy then send 2 messages per second else 1 message
-            var totalMessages = durationInMinutes * (this.deviceBehaviour.IsBusy ? 2 : 1) * 60;
+            var totalMessages = (this.deviceBehaviour.IsBusy ? 2 : 1) * durationInMinutes * 60;
 
             // if elevator is busy then frequence is 500ms else 1s
-            int frequency = this.deviceBehaviour.IsBusy ? 1 : 2 * (REPORT_FREQUENCY_IN_SECONDS * 500);
+            int frequency = (this.deviceBehaviour.IsBusy ? 1 : 2) * (REPORT_FREQUENCY_IN_SECONDS * 500);
 
             int totalMessagesSent = 0;
 
@@ -105,7 +105,7 @@ namespace Simulator
 
                     monitorData.Floor = this.currentFloor;
 
-                    await this.transport.SendEventAsync(monitorData.ToString());
+                    // await this.transport.SendEventAsync(monitorData.ToString());
                 }
                 finally
                 {
