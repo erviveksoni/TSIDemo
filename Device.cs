@@ -100,7 +100,7 @@ namespace Simulator
                         var floorDiff = this.currentFloor - previousFloor;
                         var distance = floorDiff * 10;
                         monitorData.Distance = distance < 0 ? distance * -1 : distance;
-                        monitorData.NumberOfDoorCycles = Utility.GetFloorRandom(1, 4);
+                        monitorData.NumberOfDoorCycles = Utility.GetFloorRandom(1, 5);
                     }
 
                     monitorData.Floor = this.currentFloor;
