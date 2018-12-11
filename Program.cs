@@ -30,7 +30,7 @@ namespace Simulator
                 var deviceFactory = new DeviceFactory(transport);
 
                 var dataRows = new List<string[]>();
-                var csvLines = File.ReadAllLines(@"Data\SimulationDevices.csv", Encoding.UTF8);
+                var csvLines = File.ReadAllLines(@"Data/SimulationDevices.csv", Encoding.UTF8);
                 var rawrows = csvLines.Skip(1); // skip header row
                 foreach (string line in rawrows)
                 {
