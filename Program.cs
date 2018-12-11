@@ -12,18 +12,21 @@ namespace Simulator
     class Program
     {
         private static CancellationTokenSource ctsSource;
+
+        // duration for which the simulation should run
         private static int durationMinutes = 5;
 
         static void Main(string[] args)
         {
             ctsSource = new CancellationTokenSource();
+
+            // Event hub connection string
             var connectionString =
-                "Endpoint=sb://tsidemoeventhubs.servicebus.windows.net/;SharedAccessKeyName=SendPolicy;SharedAccessKey=cfoFDCRcCCz81C4wau5Epjk4CLBBJ/Vb1AHBy5YaJMY=;EntityPath=tsieventhub";
+                "";
             var transport = new EventHubTransport(connectionString);
 
             try
             {
-
                 var deviceFactory = new DeviceFactory(transport);
 
                 var dataRows = new List<string[]>();
