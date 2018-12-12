@@ -8,21 +8,22 @@ namespace Simulator
 
         public static int GetFloorIncremental(int current, int minFloor, int maxFloor)
         {
-            if (current == minFloor)
+            var newValue = rand.Next(minFloor, maxFloor);
+            if (newValue == current)
             {
-                return current + 1;
+                current = newValue + 1;
             }
-            if (current == maxFloor)
+            else
             {
-                return current - 5;
+                current = newValue;
+            }
+            
+            if (current > maxFloor)
+            {
+                return current - 3;
             }
 
-            if (rand.Next(minFloor, maxFloor) == current)
-            {
-                current = current - 1;
-            }
-
-            return current + 1;
+            return current;
         }
 
         public static int GetFloorRandom(int minFloor, int maxFloor)
