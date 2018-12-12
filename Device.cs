@@ -79,29 +79,29 @@ namespace Simulator
                         monitorData.Humidity = Utility.IncrementValue(monitorData.Humidity, 20);
                     }
 
-                    if (this.deviceBehaviour.IsBlocked)
-                    {
-                        // Assign only once
-                        if (this.currentFloor < 1)
-                        {
-                            this.currentFloor = Utility.GetFloorRandom(1, 15);
-                        }
+                    this.currentFloor = Utility.GetFloorIncremental(previousFloor, 1, 20);
+                    monitorData.Vibration = this.vibrationGenerator.GetNextValue();
+                    monitorData.Load = this.loadGenerator.GetNextValue();
+                    var floorDiff = this.currentFloor - previousFloor;
+                    var distance = floorDiff * 10;
+                    monitorData.Distance = distance < 0 ? distance * -1 : distance;
+                    monitorData.NumberOfDoorCycles = Utility.GetFloorRandom(1, 5);
 
-                        monitorData.Vibration = 0;
-                        monitorData.Load = 0;
-                        monitorData.Distance = 0;
-                        monitorData.NumberOfDoorCycles = Utility.GetFloorRandom(0, 1);
-                    }
-                    else
-                    {
-                        this.currentFloor = Utility.GetFloorIncremental(previousFloor, 1, 20);
-                        monitorData.Vibration = this.vibrationGenerator.GetNextValue();
-                        monitorData.Load = this.loadGenerator.GetNextValue();
-                        var floorDiff = this.currentFloor - previousFloor;
-                        var distance = floorDiff * 10;
-                        monitorData.Distance = distance < 0 ? distance * -1 : distance;
-                        monitorData.NumberOfDoorCycles = Utility.GetFloorRandom(1, 5);
-                    }
+                    #region BlockedBehaviour
+                    //if (this.deviceBehaviour.IsBlocked)
+                    //{
+                    //    // Assign only once
+                    //    if (this.currentFloor < 1)
+                    //    {
+                    //        this.currentFloor = Utility.GetFloorRandom(1, 15);
+                    //    }
+
+                    //    monitorData.Vibration = 0;
+                    //    monitorData.Load = 0;
+                    //    monitorData.Distance = 0;
+                    //    monitorData.NumberOfDoorCycles = Utility.GetFloorRandom(0, 1);
+                    //}
+                    #endregion
 
                     monitorData.Floor = this.currentFloor;
 

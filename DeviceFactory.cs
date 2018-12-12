@@ -17,17 +17,20 @@ namespace Simulator
             {
                 var name = deviceToken[0];
                 var isServiceElevator = bool.Parse(deviceToken[1]);
-                var isBlocked = bool.Parse(deviceToken[2]);
-                var hasFaultyAC = bool.Parse(deviceToken[3]);
+                var hasFaultyAc = bool.Parse(deviceToken[3]);
                 var isBusy = bool.Parse(deviceToken[4]);
 
                 var behaviour = new DeviceBehaviour()
                 {
-                    IsBlocked = isBlocked,
                     IsService = isServiceElevator,
-                    HasFaultyACUnit = hasFaultyAC,
+                    HasFaultyACUnit = hasFaultyAc,
                     IsBusy = isBusy
                 };
+
+                #region BlockedBehaviour
+                //var isBlocked = bool.Parse(deviceToken[2]);
+                //behaviour.IsBlocked = isBlocked;
+                #endregion
 
                 var device = new Device(name, behaviour, this.transport);
 
