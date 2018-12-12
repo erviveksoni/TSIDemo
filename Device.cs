@@ -76,7 +76,7 @@ namespace Simulator
                     else
                     {
                         monitorData.Temperature = Utility.IncrementValue(monitorData.Temperature, 40);
-                        monitorData.Humidity = Utility.IncrementValue(monitorData.Humidity, 20);
+                        monitorData.Humidity = Utility.DecrementValue(monitorData.Humidity, 2);
                     }
 
                     this.currentFloor = Utility.GetFloorIncremental(previousFloor, 1, 20);

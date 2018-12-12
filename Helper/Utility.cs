@@ -43,5 +43,19 @@ namespace Simulator
 
             return current;
         }
+
+        public static double DecrementValue(double current, double min)
+        {
+            if (current <= min)
+            {
+                current = current + rand.NextDouble();
+            }
+            else
+            {
+                current = current - rand.NextDouble();
+            }
+
+            return current;
+        }
     }
 }
