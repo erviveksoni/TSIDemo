@@ -104,7 +104,7 @@ namespace Simulator
             if (!isJerky)
             {
                 monitorData.Vibration = this.vibrationGenerator.GetNextValue();
-                monitorData.Vibration = monitorData.Vibration > 5 ? monitorData.Vibration - Utility.GetRandomValue(0, 4) : monitorData.Vibration;
+                monitorData.Vibration = monitorData.Vibration > 5 ? 5 - Utility.GetRandomValue(0, 4) : monitorData.Vibration;
                 monitorData.Jerks = 0;
             }
             else
