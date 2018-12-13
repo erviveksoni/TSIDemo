@@ -26,7 +26,7 @@ namespace Simulator
             return current;
         }
 
-        public static int GetFloorRandom(int minFloor, int maxFloor)
+        public static int GetRandomValue(int minFloor, int maxFloor)
         {
             return rand.Next(minFloor, maxFloor);
         }

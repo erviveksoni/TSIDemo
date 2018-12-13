@@ -32,7 +32,7 @@ namespace Simulator
             {
                 this.temperatureGenerator = new SampleDataGenerator(22, 24, 30, peakFrequencyInTicks);
                 this.humidityGenerator = new SampleDataGenerator(20, 50);
-                this.vibrationGenerator = new SampleDataGenerator(0, 10);
+                this.vibrationGenerator = new SampleDataGenerator(0, 5);
                 this.loadGenerator = new SampleDataGenerator(200, 800);
             }
             else
@@ -68,22 +68,13 @@ namespace Simulator
                     monitorData.DeviceId = this.deviceId;
                     monitorData.TimeStamp = DateTime.UtcNow;
 
-                    if (!this.deviceBehaviour.HasFaultyACUnit)
-                    {
-                        monitorData.Temperature = this.temperatureGenerator.GetNextValue();
-                        monitorData.Humidity = this.humidityGenerator.GetNextValue();
-                    }
-                    else
-                    {
-                        monitorData.Temperature = Utility.IncrementValue(monitorData.Temperature, 40);
-                        monitorData.Humidity = Utility.DecrementValue(monitorData.Humidity, 2);
-                    }
+                    this.InjectfaultyAcBehaviour(this.deviceBehaviour.HasFaultyACUnit, monitorData);
 
-                    this.UpdateNormalDeviceTelemetry(false, previousFloor, monitorData);
+                    this.InjectBlockedElevatorBehaviour(this.deviceBehaviour.IsBlocked, previousFloor, monitorData);
 
-                    //#region BlockedBehaviour
-                    //this.UpdateNormalDeviceTelemetry(this.deviceBehaviour.IsBlocked, previousFloor, monitorData);
-                    //#endregion 
+                    this.InjectJerkyBehaviour(this.deviceBehaviour.IsJerky, monitorData);
+
+                    this.InjectAUXPowerBehaviour(this.deviceBehaviour.IsOnAuxPower, monitorData);
 
                     monitorData.Floor = this.currentFloor;
 
@@ -99,7 +90,36 @@ namespace Simulator
             Console.WriteLine($"Device {this.deviceId} finished sending telemetry messages!");
         }
 
-        private void UpdateNormalDeviceTelemetry(bool isblocked, int previousFloor, Telemetry monitorData)
+        private void InjectfaultyAcBehaviour(bool isfaulty, Telemetry monitorData)
+        {
+            if (!isfaulty)
+            {
+                monitorData.Temperature = this.temperatureGenerator.GetNextValue();
+                monitorData.Humidity = this.humidityGenerator.GetNextValue();
+            }
+            else
+            {
+                monitorData.Temperature = Utility.IncrementValue(monitorData.Temperature, 40);
+                monitorData.Humidity = Utility.DecrementValue(monitorData.Humidity, 2);
+            }
+        }
+
+        private void InjectJerkyBehaviour(bool isJerky, Telemetry monitorData)
+        {
+            if (!isJerky)
+            {
+                monitorData.Vibration = this.vibrationGenerator.GetNextValue();
+                monitorData.Jerks = 0;
+            }
+            else
+            {
+                monitorData.Vibration = this.vibrationGenerator.GetNextValue();
+                monitorData.Vibration = monitorData.Vibration < 5 ? 5 + Utility.GetRandomValue(0, 3) : monitorData.Vibration;
+                monitorData.Jerks = Utility.GetRandomValue(0, 2);
+            }
+        }
+
+        private void InjectBlockedElevatorBehaviour(bool isblocked, int previousFloor, Telemetry monitorData)
         {
             if (!isblocked)
             {
@@ -109,20 +129,33 @@ namespace Simulator
                 var floorDiff = this.currentFloor - previousFloor;
                 var distance = floorDiff * 10;
                 monitorData.Distance = distance < 0 ? distance * -1 : distance;
-                monitorData.NumberOfDoorCycles = Utility.GetFloorRandom(1, 5);
+                monitorData.NumberOfDoorCycles = Utility.GetRandomValue(1, 5);
             }
             else
             {
                 // Assign only once
                 if (this.currentFloor < 1)
                 {
-                    this.currentFloor = Utility.GetFloorRandom(1, 15);
+                    this.currentFloor = Utility.GetRandomValue(1, 15);
                 }
 
                 monitorData.Vibration = 0;
                 monitorData.Load = 0;
                 monitorData.Distance = 0;
-                monitorData.NumberOfDoorCycles = Utility.GetFloorRandom(0, 1);
+                monitorData.NumberOfDoorCycles = Utility.GetRandomValue(0, 1);
+            }
+        }
+
+        private void InjectAUXPowerBehaviour(bool isOnAuxPower, Telemetry monitorData)
+        {
+            if (!isOnAuxPower)
+            {
+                monitorData.PowerType = PowerType.Main.ToString();
+            }
+            else
+            {
+                monitorData.PowerType = PowerType.AUX.ToString();
+                monitorData.Jerks = Utility.GetRandomValue(1, 2);
             }
         }
     }

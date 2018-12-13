@@ -26,6 +26,15 @@ namespace Simulator
         [JsonProperty("vibration")]
         public double Vibration { get; set; }
 
+        [JsonProperty("doorSafetyReading")]
+        public double DoorSafetyReading { get; set; }
+
+        [JsonProperty("jerks")]
+        public int Jerks { get; set; }
+
+        [JsonProperty("powerType")]
+        public string PowerType { get; set; }
+
         [JsonProperty("floor")]
         public int Floor { get; set; }
 
