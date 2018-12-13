@@ -104,13 +104,14 @@ namespace Simulator
             if (!isJerky)
             {
                 monitorData.Vibration = this.vibrationGenerator.GetNextValue();
+                monitorData.Vibration = monitorData.Vibration > 5 ? monitorData.Vibration - Utility.GetRandomValue(0, 4) : monitorData.Vibration;
                 monitorData.Jerks = 0;
             }
             else
             {
                 monitorData.Vibration = this.vibrationGenerator.GetNextValue();
                 monitorData.Vibration = monitorData.Vibration < 5 ? 5 + Utility.GetRandomValue(0, 3) : monitorData.Vibration;
-                monitorData.Jerks = Utility.GetRandomValue(0, 2);
+                monitorData.Jerks = Utility.GetRandomValue(0, 4);
             }
         }
 
@@ -119,12 +120,12 @@ namespace Simulator
             if (!isblocked)
             {
                 this.currentFloor = Utility.GetFloorIncremental(previousFloor, 1, 20);
-                monitorData.Vibration = this.vibrationGenerator.GetNextValue();
-                monitorData.Load = this.loadGenerator.GetNextValue();
                 var floorDiff = this.currentFloor - previousFloor;
                 var distance = floorDiff * 10;
+
                 monitorData.Distance = distance < 0 ? distance * -1 : distance;
                 monitorData.NumberOfDoorCycles = Utility.GetRandomValue(1, 5);
+                monitorData.Load = this.loadGenerator.GetNextValue();
             }
             else
             {
@@ -150,7 +151,7 @@ namespace Simulator
             else
             {
                 monitorData.PowerType = PowerType.AUX.ToString();
-                monitorData.Jerks = Utility.GetRandomValue(1, 2);
+                monitorData.Jerks = Utility.GetRandomValue(1, 4);
             }
         }
 
