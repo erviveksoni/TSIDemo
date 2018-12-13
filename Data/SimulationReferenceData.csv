@@ -6,7 +6,7 @@ device4,Building 4,Passenger,Skyline,SK100,600,ft,kg,C,RH,mm
 device5,Building 5,Service,Contoso,CN2004,1000,ft,kg,C,RH,mm
 device6,Building 4,Passenger,Skyline,SK100,600,ft,kg,C,RH,mm
 device7,Building 1,Passenger,Contoso,CN2004,600,ft,kg,C,RH,mm
-device8,Building 2,Passenger,Contoso,CN2004,600,ft,kg,C,RH,mm
+device8,Building 2,Service,Contoso,CN2004,600,ft,kg,C,RH,mm
 device9,Building 3,Passenger,Skyline,SK100,1000,ft,kg,C,RH,mm
 device10,Building 4,Passenger,Contoso,CN2004,600,ft,kg,C,RH,mm
 device11,Building 5,Passenger,Contoso,CN2004,600,ft,kg,C,RH,mm
@@ -18,18 +18,18 @@ device16,Building 3,Passenger,Contoso,CN2004,600,ft,kg,C,RH,mm
 device17,Building 4,Service,Contoso,CN2004,1000,ft,kg,C,RH,mm
 device18,Building 5,Passenger,Skyline,SK100,600,ft,kg,C,RH,mm
 device19,Building 1,Passenger,Contoso,CN2004,600,ft,kg,C,RH,mm
-device20,Building 2,Service,Skyline,SK100,1000,ft,kg,C,RH,mm
+device20,Building 2,Passenger,Skyline,SK100,1000,ft,kg,C,RH,mm
 device21,Building 3,Passenger,Contoso,CN2004,600,ft,kg,C,RH,mm
 device22,Building 3,Passenger,Contoso,CN2004,600,ft,kg,C,RH,mm
 device23,Building 4,Passenger,Skyline,SK100,600,ft,kg,C,RH,mm
 device24,Building 5,Passenger,Contoso,CN2004,600,ft,kg,C,RH,mm
 device25,Building 1,Passenger,Skyline,SK100,600,ft,kg,C,RH,mm
-device26,Building 2,Passenger,Contoso,CN2004,600,ft,kg,C,RH,mm
+device26,Building 2,Service,Contoso,CN2004,600,ft,kg,C,RH,mm
 device27,Building 3,Passenger,Contoso,CN2004,600,ft,kg,C,RH,mm
-device28,Building 4,Passenger,Skyline,SK100,600,ft,kg,C,RH,mm
+device28,Building 4,Service,Skyline,SK100,600,ft,kg,C,RH,mm
 device29,Building 3,Service,Skyline,SK100,1000,ft,kg,C,RH,mm
 device30,Building 5,Passenger,Skyline,SK100,600,ft,kg,C,RH,mm
-device31,Building 1,Service,Contoso,CN2004,1000,ft,kg,C,RH,mm
+device31,Building 1,Passenger,Contoso,CN2004,1000,ft,kg,C,RH,mm
 device32,Building 2,Passenger,Contoso,CN2010,600,ft,kg,C,RH,mm
 device33,Building 3,Passenger,Skyline,SK100,1000,ft,kg,C,RH,mm
 device34,Building 4,Passenger,Contoso,CN2004,1000,ft,kg,C,RH,mm
@@ -48,4 +48,4 @@ device46,Building 1,Passenger,Contoso,CN2010,600,ft,kg,C,RH,mm
 device47,Building 2,Passenger,Contoso,CN2010,600,ft,kg,C,RH,mm
 device48,Building 3,Passenger,Skyline,SK1200,600,ft,kg,C,RH,mm
 device49,Building 4,Passenger,Skyline,SK1200,600,ft,kg,C,RH,mm
-device50,Building 6,Service,Contoso,CN2010,1000,ft,kg,C,RH,mm
+device50,Building 6,Passenger,Contoso,CN2010,1000,ft,kg,C,RH,mm
