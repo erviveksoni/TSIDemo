@@ -63,9 +63,9 @@ namespace Simulator
 
                     this.InjectfaultyAcBehaviour(this.deviceBehaviour.HasFaultyACUnit, monitorData);
 
-                    this.InjectBlockedElevatorBehaviour(this.deviceBehaviour.IsBlocked, previousFloor, monitorData);
-
                     this.InjectJerkyBehaviour(this.deviceBehaviour.IsJerky, monitorData);
+
+                    this.InjectBlockedElevatorBehaviour(this.deviceBehaviour.IsBlocked, previousFloor, monitorData);
 
                     this.InjectAUXPowerBehaviour(this.deviceBehaviour.IsOnAuxPower, monitorData);
 
@@ -110,7 +110,7 @@ namespace Simulator
             else
             {
                 monitorData.Vibration = this.vibrationGenerator.GetNextValue();
-                monitorData.Vibration = monitorData.Vibration < 5 ? 5 + Utility.GetRandomValue(0, 3) : monitorData.Vibration;
+                monitorData.Vibration = monitorData.Vibration < 5 ? 5 + Utility.GetRandomValue(0, 4) : monitorData.Vibration;
                 monitorData.Jerks = Utility.GetRandomValue(0, 4);
             }
         }
