@@ -31,6 +31,11 @@ namespace Simulator
             return rand.Next(minFloor, maxFloor);
         }
 
+        public static double GetRandomValue()
+        {
+            return rand.NextDouble();
+        }
+
         public static double IncrementValue(double current, double max)
         {
             if (current <= max)

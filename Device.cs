@@ -13,6 +13,7 @@ namespace Simulator
         private SampleDataGenerator humidityGenerator;
         private SampleDataGenerator vibrationGenerator;
         private SampleDataGenerator loadGenerator;
+        private SampleDataGenerator dscGenerator;
 
         private const int REPORT_FREQUENCY_IN_SECONDS = 1;
         private const int PEAK_FREQUENCY_IN_SECONDS = 18;
@@ -28,20 +29,12 @@ namespace Simulator
             this.deviceBehaviour = deviceBehaviour;
             int peakFrequencyInTicks = Convert.ToInt32(Math.Ceiling((double)PEAK_FREQUENCY_IN_SECONDS / REPORT_FREQUENCY_IN_SECONDS));
 
-            if (!this.deviceBehaviour.IsService)
-            {
-                this.temperatureGenerator = new SampleDataGenerator(22, 24, 30, peakFrequencyInTicks);
-                this.humidityGenerator = new SampleDataGenerator(20, 50);
-                this.vibrationGenerator = new SampleDataGenerator(0, 5);
-                this.loadGenerator = new SampleDataGenerator(200, 800);
-            }
-            else
-            {
-                this.temperatureGenerator = new SampleDataGenerator(22, 26, 32, peakFrequencyInTicks);
-                this.humidityGenerator = new SampleDataGenerator(20, 50);
-                this.vibrationGenerator = new SampleDataGenerator(1, 10);
-                this.loadGenerator = new SampleDataGenerator(300, 1200);
-            }
+            this.dscGenerator = new SampleDataGenerator(0, 0.6);
+            this.temperatureGenerator = new SampleDataGenerator(22, 24, 30, peakFrequencyInTicks);
+            this.humidityGenerator = new SampleDataGenerator(20, 50);
+            this.vibrationGenerator = new SampleDataGenerator(0, 10);
+
+            this.loadGenerator = !this.deviceBehaviour.IsService ? new SampleDataGenerator(200, 800) : new SampleDataGenerator(300, 1200);
         }
 
         public async Task SendTelemetryAsync(int durationInMinutes, CancellationToken token)
@@ -75,6 +68,8 @@ namespace Simulator
                     this.InjectJerkyBehaviour(this.deviceBehaviour.IsJerky, monitorData);
 
                     this.InjectAUXPowerBehaviour(this.deviceBehaviour.IsOnAuxPower, monitorData);
+
+                    this.InjectFaultyDscBehaviour(this.deviceBehaviour.IsDSCMalfunctioning, monitorData);
 
                     monitorData.Floor = this.currentFloor;
 
@@ -156,6 +151,21 @@ namespace Simulator
             {
                 monitorData.PowerType = PowerType.AUX.ToString();
                 monitorData.Jerks = Utility.GetRandomValue(1, 2);
+            }
+        }
+
+        private void InjectFaultyDscBehaviour(bool isfaulty, Telemetry monitorData)
+        {
+            if (!isfaulty)
+            {
+                monitorData.DoorSafetyReading = this.dscGenerator.GetNextValue();
+                monitorData.DoorSafetyReading = monitorData.DoorSafetyReading < 0.7
+                    ? (0.7 - monitorData.DoorSafetyReading) + monitorData.DoorSafetyReading
+                    : monitorData.DoorSafetyReading;
+            }
+            else
+            {
+                monitorData.DoorSafetyReading = this.dscGenerator.GetNextValue();
             }
         }
     }
