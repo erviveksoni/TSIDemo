@@ -22,7 +22,7 @@ namespace Simulator
 
             // Event hub connection string
             var connectionString =
-                "Endpoint=sb://tsieventhub-ns.servicebus.windows.net/;SharedAccessKeyName=SendPolicy;SharedAccessKey=aw+mNuPRuopfm2brdcXLvwgFZ0x9LTSMhEzcoe4JeBI=;EntityPath=tsieventhub";
+                "";
             var transport = new EventHubTransport(connectionString);
 
             try
